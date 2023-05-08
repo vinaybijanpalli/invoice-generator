@@ -35,6 +35,11 @@ html,
   box-shadow: 0 .1rem .1rem rgba(0,0,0,.05)!important
 }
 
+.button-container {
+  width: 100px;
+  margin-right: 24px;
+}
+
 .modal-content,
 .card {
   overflow: hidden;
