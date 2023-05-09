@@ -48,8 +48,11 @@ class InvoiceForm extends React.Component {
   }
   handleRowDel(items) {
     var index = this.state.items.indexOf(items);
-    this.state.items.splice(index, 1);
-    this.setState(this.state.items);
+    const newItems = [
+      ...this.state.items.slice(0, index),
+      ...this.state.items.slice(index + 1),
+    ];
+    this.setState({ items: newItems });
   }
   handleAddEvent(evt) {
     var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
@@ -60,8 +63,8 @@ class InvoiceForm extends React.Component {
       description: "",
       quantity: 1,
     };
-    this.state.items.push(items);
-    this.setState(this.state.items);
+    const newItems = [...this.state.items, items];
+    this.setState({ items: newItems });
   }
   handleCalculateTotal() {
     var items = this.state.items;
@@ -69,8 +72,8 @@ class InvoiceForm extends React.Component {
 
     items.map(function (items) {
       subTotal = parseFloat(
-        subTotal + parseFloat(items.price).toFixed(2) * parseInt(items.quantity)
-      ).toFixed(2);
+        subTotal + parseFloat(items.price) * parseInt(items.quantity)
+      );
     });
 
     this.setState(
@@ -94,8 +97,8 @@ class InvoiceForm extends React.Component {
               () => {
                 this.setState({
                   total:
-                    subTotal -
-                    this.state.discountAmmount +
+                    parseFloat(subTotal) -
+                    parseFloat(this.state.discountAmmount) +
                     parseFloat(this.state.taxAmmount),
                 });
               }
@@ -112,13 +115,14 @@ class InvoiceForm extends React.Component {
       value: evt.target.value,
     };
     var items = this.state.items.slice();
-    var newItems = items.map(function (items) {
-      for (var key in items) {
-        if (key == item.name && items.id == item.id) {
-          items[key] = item.value;
-        }
+    var newItems = items.map(function (itemObj) {
+      if (itemObj.id == item.id) {
+        return {
+          ...itemObj,
+          [item.name]: item.value,
+        };
       }
-      return items;
+      return itemObj;
     });
     this.setState({ items: newItems });
     this.handleCalculateTotal();
@@ -141,6 +145,13 @@ class InvoiceForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.openModal}>
+        <Button
+          variant="secondary"
+          className="mx-2 mt-4"
+          onClick={this.props.onHide}
+        >
+          Back
+        </Button>
         <Row>
           <Col md={8} lg={9}>
             <Card className="p-4 p-xl-5 my-3 my-xl-4">

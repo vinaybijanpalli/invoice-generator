@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteInvoice } from "../features/invoice/invoiceSlice";
 import InvoiceForm from "./InvoiceForm";
+import InvoiceModal from "./InvoiceModal";
 
 function InvoicesList({ setShowCreateInvoice }) {
   const invoices = useSelector((state) => state.invoice.invoices);
   const [showEditInvoice, setShowEditInvoice] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
+  const dispatch = useDispatch();
   console.log(invoices);
 
   const handleCreateClick = () => {
@@ -20,6 +23,21 @@ function InvoicesList({ setShowCreateInvoice }) {
     setShowEditInvoice(true);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = (invoice) => {
+    setSelectedInvoice(invoice);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleDelete = (invoiceId) => {
+    dispatch(deleteInvoice(invoiceId));
+  };
+
   return (
     <div>
       {showEditInvoice ? (
@@ -29,13 +47,16 @@ function InvoicesList({ setShowCreateInvoice }) {
         />
       ) : (
         <>
-          <Button onClick={handleCreateClick}>Create Invoice</Button>
-          <h2>Invoices</h2>
+          <h2 className="py-2">Invoices</h2>
+          <Button onClick={handleCreateClick} className="mb-2">
+            Create Invoice
+          </Button>
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>#</th>
-                <th>Client</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Date</th>
                 <th>Items</th>
                 <th>Total</th>
@@ -47,11 +68,16 @@ function InvoicesList({ setShowCreateInvoice }) {
                 <tr key={invoice.id}>
                   <td>{invoice.invoiceNumber}</td>
                   <td>{invoice.billTo}</td>
+                  <td>{invoice.billToEmail}</td>
                   <td>{invoice.dateOfIssue}</td>
                   <td>{invoice.items.length}</td>
                   <td>{invoice.total}</td>
                   <td>
-                    <Button variant="primary" className="button-container">
+                    <Button
+                      variant="primary"
+                      className="button-container"
+                      onClick={() => openModal(invoice)}
+                    >
                       View
                     </Button>
                     <Button
@@ -61,7 +87,11 @@ function InvoicesList({ setShowCreateInvoice }) {
                     >
                       Edit
                     </Button>
-                    <Button variant="danger" className="button-container">
+                    <Button
+                      variant="danger"
+                      className="button-container"
+                      onClick={() => handleDelete(invoice.id)}
+                    >
                       Delete
                     </Button>
                   </td>
@@ -69,6 +99,19 @@ function InvoicesList({ setShowCreateInvoice }) {
               ))}
             </tbody>
           </Table>
+          {isOpen && (
+            <InvoiceModal
+              showModal={isOpen}
+              closeModal={closeModal}
+              info={selectedInvoice}
+              items={selectedInvoice.items}
+              currency={selectedInvoice.currency}
+              subTotal={selectedInvoice.subTotal}
+              taxAmmount={selectedInvoice.taxAmmount}
+              discountAmmount={selectedInvoice.discountAmmount}
+              total={selectedInvoice.total}
+            />
+          )}
         </>
       )}
     </div>

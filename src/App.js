@@ -7,7 +7,7 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
-import InvoiceList from "./components/InvoiceList";
+import InvoicesList from "./components/InvoicesList";
 
 let persistor = persistStore(store);
 
@@ -20,9 +20,9 @@ const App = () => {
         <div className="App d-flex flex-column align-items-center justify-content-center w-100">
           <Container>
             {showCreateInvoice ? (
-              <InvoiceForm />
+              <InvoiceForm onHide={() => setShowCreateInvoice(false)} />
             ) : (
-              <InvoiceList setShowCreateInvoice={setShowCreateInvoice} />
+              <InvoicesList setShowCreateInvoice={setShowCreateInvoice} />
             )}
           </Container>
         </div>
