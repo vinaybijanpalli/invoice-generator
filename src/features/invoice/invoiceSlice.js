@@ -8,6 +8,9 @@ export const invoiceSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
+    addInvoice: (state, action) => {
+      state.invoices.push(action.payload);
+    },
     saveInvoice: (state, action) => {
       const index = state.invoices.findIndex(
         (invoice) => invoice.id === action.payload.id
@@ -26,6 +29,6 @@ export const invoiceSlice = createSlice({
   },
 });
 
-export const { saveInvoice, deleteInvoice } = invoiceSlice.actions;
+export const { addInvoice, saveInvoice, deleteInvoice } = invoiceSlice.actions;
 
 export default invoiceSlice.reducer;

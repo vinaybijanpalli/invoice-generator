@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteInvoice } from "../features/invoice/invoiceSlice";
+import { addInvoice, deleteInvoice } from "../features/invoice/invoiceSlice";
 import InvoiceForm from "./InvoiceForm";
 import InvoiceModal from "./InvoiceModal";
 
@@ -12,7 +12,6 @@ function InvoicesList({ setShowCreateInvoice }) {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
   const dispatch = useDispatch();
-  console.log(invoices);
 
   const handleCreateClick = () => {
     setShowCreateInvoice(true);
@@ -37,6 +36,18 @@ function InvoicesList({ setShowCreateInvoice }) {
   const handleDelete = (invoiceId) => {
     dispatch(deleteInvoice(invoiceId));
   };
+
+  const handleClone = (invoice) => {
+    dispatch(addInvoice({ ...invoice, id: maxId + 1 }));
+  };
+
+  let maxId;
+  if (invoices?.length) {
+    maxId = invoices.reduce(
+      (max, invoice) => (invoice.id > max ? invoice.id : max),
+      invoices[0].id
+    );
+  }
 
   return (
     <div>
@@ -93,6 +104,13 @@ function InvoicesList({ setShowCreateInvoice }) {
                       onClick={() => handleDelete(invoice.id)}
                     >
                       Delete
+                    </Button>
+                    <Button
+                      variant="info"
+                      className="button-container"
+                      onClick={() => handleClone(invoice)}
+                    >
+                      Clone
                     </Button>
                   </td>
                 </tr>

@@ -339,6 +339,7 @@ class InvoiceForm extends React.Component {
               <InvoiceModal
                 showModal={this.state.isOpen}
                 closeModal={this.closeModal}
+                closeInvoice={this.props.onHide}
                 info={this.state}
                 items={this.state.items}
                 currency={this.state.currency}

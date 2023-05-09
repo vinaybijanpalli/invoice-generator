@@ -34,21 +34,27 @@ function InvoiceModal(props) {
   function handleSave() {
     const newInvoice = {
       id: props.info.invoiceNumber,
+      currency: props.info.currency,
       billFrom: props.info.billFrom || "",
+      billFromEmail: props.info.billFromEmail || "",
+      billFromAddress: props.info.billFromAddress || "",
       invoiceNumber: props.info.invoiceNumber,
       billTo: props.info.billTo || "",
       billToAddress: props.info.billToAddress || "",
       billToEmail: props.info.billToEmail || "",
       dateOfIssue: props.info.dateOfIssue || "",
-      items: props.items,
-      subTotal: props.subTotal,
-      taxAmmount: props.taxAmmount,
-      discountAmmount: props.discountAmmount,
-      total: props.total,
+      items: props.info.items,
+      subTotal: props.info.subTotal,
+      taxRate: props.info.taxRate,
+      taxAmmount: props.info.taxAmmount,
+      discountRate: props.info.discountRate,
+      discountAmmount: props.info.discountAmmount,
+      total: props.info.total,
       notes: props.info.notes || "",
     };
-    console.log(newInvoice);
     dispatch(saveInvoice(newInvoice));
+    props.closeModal();
+    props.closeInvoice && props.closeInvoice();
   }
 
   return (
