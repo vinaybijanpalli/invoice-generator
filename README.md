@@ -13,9 +13,9 @@ https://invoice-generator-three.vercel.app/
 ### Screenshots
 
 <img src="https://i.imgur.com/exbfHfP.png" style="max-width: 100px; width: 100%; height: auto;">
-<img src="https://i.imgur.com/wRetnxk.png" style="max-width: 100px; width: 100%; height: auto;">
+<img src="https://i.imgur.com/MNEhMSZ.png" style="max-width: 100px; width: 100%; height: auto;">
 <img src="https://i.imgur.com/6sHgJsu.png" style="max-width: 100px; width: 100%; height: auto;">
-<img src="https://i.imgur.com/Bz3K3DE.png" style="max-width: 100px; width: 100%; height: auto;">
+<img src="https://i.imgur.com/1vtgKkV.png" style="max-width: 100px; width: 100%; height: auto;">
 
 ### Installation
 
