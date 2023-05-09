@@ -6,8 +6,9 @@ import { addInvoice, deleteInvoice } from "../features/invoice/invoiceSlice";
 import InvoiceForm from "./InvoiceForm";
 import InvoiceModal from "./InvoiceModal";
 
-function InvoicesList({ setShowCreateInvoice }) {
+function InvoicesList() {
   const invoices = useSelector((state) => state.invoice.invoices);
+  const [showCreateInvoice, setShowCreateInvoice] = useState(false);
   const [showEditInvoice, setShowEditInvoice] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
@@ -47,14 +48,21 @@ function InvoicesList({ setShowCreateInvoice }) {
       (max, invoice) => (invoice.id > max ? invoice.id : max),
       invoices[0].id
     );
+  } else {
+    maxId = 0;
   }
 
   return (
     <div>
-      {showEditInvoice ? (
+      {showCreateInvoice || showEditInvoice ? (
         <InvoiceForm
           invoice={selectedInvoice}
-          onHide={() => setShowEditInvoice(false)}
+          onHide={() => {
+            setShowCreateInvoice(false);
+            setShowEditInvoice(false);
+            setSelectedInvoice(null);
+          }}
+          id={showEditInvoice ? selectedInvoice.id : maxId + 1}
         />
       ) : (
         <>
@@ -77,7 +85,7 @@ function InvoicesList({ setShowCreateInvoice }) {
             <tbody>
               {invoices.map((invoice, index) => (
                 <tr key={invoice.id}>
-                  <td>{invoice.invoiceNumber}</td>
+                  <td>{invoice.id}</td>
                   <td>{invoice.billTo}</td>
                   <td>{invoice.billToEmail}</td>
                   <td>{invoice.dateOfIssue}</td>

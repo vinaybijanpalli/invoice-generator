@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { BiPaperPlane, BiCloudDownload, BiSave } from "react-icons/bi";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveInvoice } from "../features/invoice/invoiceSlice";
 
 function InvoiceModal(props) {
@@ -33,12 +33,11 @@ function InvoiceModal(props) {
 
   function handleSave() {
     const newInvoice = {
-      id: props.info.invoiceNumber,
+      id: props.info.id,
       currency: props.info.currency,
       billFrom: props.info.billFrom || "",
       billFromEmail: props.info.billFromEmail || "",
       billFromAddress: props.info.billFromAddress || "",
-      invoiceNumber: props.info.invoiceNumber,
       billTo: props.info.billTo || "",
       billToAddress: props.info.billToAddress || "",
       billToEmail: props.info.billToEmail || "",
@@ -72,7 +71,7 @@ function InvoiceModal(props) {
                 {props.info.billFrom || "John Uberbacher"}
               </h4>
               <h6 className="fw-bold text-secondary mb-1">
-                Invoice #: {props.info.invoiceNumber || ""}
+                Invoice #: {props.info.id || ""}
               </h6>
             </div>
             <div className="text-end ms-4">
