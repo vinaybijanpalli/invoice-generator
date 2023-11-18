@@ -27,7 +27,6 @@ git clone https://github.com/vinaybijanpalli/invoice-generator.git
 npm install
 
 
-
 npm start / npm run build
 
 ```

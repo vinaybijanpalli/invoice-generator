@@ -84,7 +84,7 @@ function InvoicesList() {
             </thead>
             <tbody>
               {invoices.map((invoice, index) => (
-                <tr key={invoice.id}>
+                <tr key={invoice.id} style={{ fontSize: "1.125rem" }}>
                   <td>{invoice.id}</td>
                   <td>{invoice.billTo}</td>
                   <td>{invoice.billToEmail}</td>

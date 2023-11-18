@@ -14,7 +14,7 @@ class InvoiceForm extends React.Component {
     super(props);
     this.state = {
       isOpen: props.invoice?.isOpen || false,
-      currency: props.invoice?.currency || "$",
+      currency: props.invoice?.currency || "₹",
       currentDate: props.invoice?.currentDate || "",
       id: props.id,
       dateOfIssue: props.invoice?.dateOfIssue || "",
@@ -45,6 +45,11 @@ class InvoiceForm extends React.Component {
   }
   componentDidMount(prevProps) {
     this.handleCalculateTotal();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.items !== this.state.items) {
+      this.handleCalculateTotal();
+    }
   }
   handleRowDel(items) {
     var index = this.state.items.indexOf(items);
@@ -189,6 +194,7 @@ class InvoiceForm extends React.Component {
                     name={"invoiceNumber"}
                     onChange={(event) => this.editField(event)}
                     min="1"
+                    disabled
                     style={{
                       maxWidth: "70px",
                     }}
@@ -357,6 +363,7 @@ class InvoiceForm extends React.Component {
                   className="btn btn-light my-1"
                   aria-label="Change Currency"
                 >
+                  <option value="₹">INR (Indian Rupee)</option>
                   <option value="$">USD (United States Dollar)</option>
                   <option value="£">GBP (British Pound Sterling)</option>
                   <option value="¥">JPY (Japanese Yen)</option>

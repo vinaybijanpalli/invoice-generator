@@ -27,7 +27,7 @@ function InvoiceModal(props) {
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("invoice-001.pdf");
+      pdf.save(`invoice-${props.info.id}.pdf`);
     });
   }
 
@@ -204,7 +204,11 @@ function InvoiceModal(props) {
               <Button
                 variant="primary"
                 className="d-block w-100"
-                onClick={GenerateInvoice}
+                onClick={() => {
+                  window.open(
+                    `mailto:?subject=Invoice&body=Please find attached the invoice.`
+                  );
+                }}
               >
                 <BiPaperPlane
                   style={{ width: "15px", height: "15px", marginTop: "-3px" }}
