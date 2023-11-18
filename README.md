@@ -20,16 +20,22 @@ https://invoice-generator-three.vercel.app/
 ### Installation
 
 ```
-
-git clone https://github.com/vinaybijanpalli/invoice-generator.git
-
+git clone https://github.com/johnuberbacher/invoice-generator
 
 npm install
 
-
 npm start / npm run build
-
 ```
+
+### To-Do
+- [x] Integrate Redux
+
+- [x] Display Invoices List
+
+- [x] Calculate Tax and Discounts
+
+- [x] Store invoices in Redux
+
 
 ### Meta
 
