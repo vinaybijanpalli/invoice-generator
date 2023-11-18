@@ -20,7 +20,7 @@ https://invoice-generator-three.vercel.app/
 ### Installation
 
 ```
-git clone https://github.com/johnuberbacher/invoice-generator
+git clone https://github.com/vinaybijanpalli/invoice-generator
 
 npm install
 
